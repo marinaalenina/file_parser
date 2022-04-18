@@ -33,8 +33,8 @@ void count_rate_en(FILE* fp) {
 		symbols += 1;
 		characters[(int)s] += 1;
 	}
-	for (int i = 65; i < 123; i++) {
-		if (i < 91 || i > 96) {
+	for (int i = 'A'; i <= 'z'; i++) {
+		if (i <= 'Z' || i >= 'a') {
 			printf("%c %d %.3f\n", (char)i, characters[i], characters[i] / (symbols * 1.0));
 		}
 	}
@@ -49,12 +49,12 @@ void count_rate_en_ir(FILE* fp) {
 	while ((s = fgetc(fp)) != EOF) {
 		symbols++;
 		characters[(int)s] += 1;
-		if ((int)s < 91)
+		if ((int)s <= 'Z')
 			characters[(int)s + 32] += 1;
-		else if ((int)s > 96)
+		else if ((int)s >= 'a')
 			characters[(int)s - 32] += 1;
 	}
-	for (int i = 65; i < 91; i++)
+	for (int i = 'A'; i <= 'Z'; i++)
 		printf("%c %d %.3f\n", (char)i, characters[i], characters[i] / (symbols * 1.0));
 	fseek(fp, 0, SEEK_SET);
 }
@@ -68,6 +68,7 @@ void count_rate_ASCII(FILE* fp) {
 		symbols++;
 		characters[(int)s] += 1;
 	}
+	//symbol ASCII 0-128
 	for (int i = 0; i < 128; i++)
 		printf("%c %d %.3f\n", (char)i, characters[i], characters[i] / (symbols * 1.0));
 	fseek(fp, 0, SEEK_SET);
